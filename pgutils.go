@@ -5,11 +5,14 @@ import (
 	"database/sql"
 	"errors"
 	"fmt"
+	"strings"
 
 	"github.com/jmoiron/sqlx"
 )
 
 func sqlErr(err error, query string, args ...interface{}) error {
+	query = strings.ReplaceAll(query, "\n", " ")
+	query = strings.ReplaceAll(query, "\t", "")
 	return fmt.Errorf(`run query "%s" with args %+v: %w`, query, args, err)
 }
 
